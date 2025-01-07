@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Trends</title>
+    <script>
+        async function fetchTrends() {
+            const response = await fetch('/run-script');
+            const data = await response.json();
+
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p>These are the most happening topics as on ${data.timestamp}:</p>
+                <ul>
+                    <li>${data.trend1}</li>
+                    <li>${data.trend2}</li>
+                    <li>${data.trend3}</li>
+                    <li>${data.trend4}</li>
+                    <li>${data.trend5}</li>
+                </ul>
+                <p>The IP address used for this query was ${data.ip_address}.</p>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            `;
+        }
+    </script>
+</head>
+<body>
+    <h1>Twitter Trends</h1>
+    <button onclick="fetchTrends()">Click here to run the script</button>
+    <div id="result"></div>
+</body>
+</html>
